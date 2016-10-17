@@ -1,12 +1,27 @@
 package com.app.coolweather.model;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.app.coolweather.R;
 import com.app.coolweather.db.CoolWeatherOpenHelper;
+import com.app.coolweather.util.HttpCallbackListener;
+import com.app.coolweather.util.HttpUtil;
+import com.app.coolweather.util.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +56,7 @@ public class CoolWeatherDB {
         }
     }
     public List<Province> loadProvince(){
-        List<Province> provinceList = new ArrayList<Province>();
+        List<Province> list = new ArrayList<Province>();
         Cursor cursor  = db.query("Province",null,null,null,null,null,null);
         if (cursor.moveToNext()){
             do {
@@ -49,13 +64,13 @@ public class CoolWeatherDB {
                 province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
                 province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
-                provinceList.add(province);
+                list.add(province);
             }while (cursor.moveToNext());
         }
         if (cursor != null){
             cursor.close();
         }
-        return provinceList;
+        return list;
     }
     public void saveCity(City city){
         if (city != null) {
@@ -112,3 +127,19 @@ public class CoolWeatherDB {
         return countryList;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
